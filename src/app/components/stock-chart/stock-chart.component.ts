@@ -17,29 +17,35 @@ export class StockChartComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    const x = ['x'];
-    let columns = this.stocks.map(stock => {
-      const column = [stock['Meta Data']['2. Symbol']];
-      const timeSeries = stock['Time Series (Daily)'];
-      Object.keys(timeSeries).forEach(key => {
-        const keyObj = timeSeries[key];
-        x.push(key);
-        column.push(keyObj[Object.keys(keyObj)[0]]);
+    const x = [];
+    const columns = this.stocks.map(stock => {
+      const column = [];
+      Object.entries(stock['Time Series (Daily)']).forEach(([day, ohlcv]) => {
+        x.unshift(day);
+        column.unshift(ohlcv['1. open']);
       });
+      column.unshift([stock['Meta Data']['2. Symbol']]);
       return column;
     });
-    columns = [...columns, x];
     this.chart = c3.generate({
       bindto: '#chart',
       data: {
-        x: 'x',
         columns
       },
       axis: {
         x: {
-          type: 'timeseries',
           tick: {
-            format: '%Y-%m-%d'
+            format: index => x[index]
+          },
+          label: {
+            text: 'Stocks',
+            position: 'outer-center'
+          }
+        },
+        y: {
+          label: {
+            text: 'Instinct value',
+            position: 'outer-top'
           }
         }
       }
