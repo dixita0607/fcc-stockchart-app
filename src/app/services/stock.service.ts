@@ -27,7 +27,10 @@ export class StockService {
     this.loading = true;
     this.httpClient.get(this.apiUrl).subscribe(
       (response: any[]) => this.stocks = response,
-      error => this.toastService.showToast('Could not fetch stocks.'),
+      error => {
+        this.toastService.showToast('Could not fetch stocks.');
+        this.loading = false;
+      },
       () => this.loading = false
     );
   }
@@ -36,7 +39,10 @@ export class StockService {
     this.loading = true;
     return this.httpClient.post(this.apiUrl, {stockCode}).do(
       response => this.toastService.showToast('Stock added.'),
-      error => this.toastService.showToast('Could not add stock.'),
+      error => {
+        this.toastService.showToast('Could not add stock.');
+        this.loading = false;
+      },
       () => this.loading = false
     );
   }
@@ -45,7 +51,10 @@ export class StockService {
     this.loading = true;
     return this.httpClient.delete(`${this.apiUrl}/${stockCode}`).do(
       response => this.toastService.showToast('Stock deleted.'),
-      error => this.toastService.showToast('Could not delete stock.'),
+      error => {
+        this.toastService.showToast('Could not delete stock.');
+        this.loading = false;
+      },
       () => this.loading = false
     );
   }
