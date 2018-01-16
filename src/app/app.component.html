@@ -1,2 +1,6 @@
-<div>{{title}}</div>
-<router-outlet></router-outlet>
+<div class="app">
+  <div class="title">{{title}}</div>
+  <router-outlet></router-outlet>
+</div>
+<div [ngClass]="{'loading': stockService.loading, 'loaded': !stockService.loading, 'load-screen': true}"></div>
+<fcc-toast></fcc-toast>

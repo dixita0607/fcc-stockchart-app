@@ -1,0 +1,31 @@
+.app {
+  .title {
+    text-align: center;
+    font-size: 30px;
+    padding: 16px 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid;
+  }
+}
+
+.loading {
+  opacity: 0.6;
+  width: 100vw;
+  height: 100vh;
+}
+
+.load-screen {
+  background-color: black;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  transition: opacity 2s linear;
+}
+
+.loaded {
+  height: 0;
+  width: 0;
+  opacity: 0;
+}

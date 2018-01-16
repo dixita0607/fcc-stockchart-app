@@ -3,7 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import * as io from 'socket.io-client';
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/publish";
+
 import "rxjs/add/operator/do";
+import {ToastService} from "./toast.service";
 
 @Injectable()
 export class StockService {
@@ -13,7 +15,8 @@ export class StockService {
   socket = io(window.location.host);
   loading: boolean = true;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private toastService: ToastService) {
     this.getStocks();
     this.socket.on('added', stock => this.stocks = [...this.stocks, stock]);
     this.socket.on('deleted',
@@ -24,7 +27,7 @@ export class StockService {
     this.loading = true;
     this.httpClient.get(this.apiUrl).subscribe(
       (response: any[]) => this.stocks = response,
-      error => console.log(error),
+      error => this.toastService.showToast('Could not fetch stocks.'),
       () => this.loading = false
     );
   }
@@ -32,9 +35,8 @@ export class StockService {
   addStock(stockCode: string): Observable<Object> {
     this.loading = true;
     return this.httpClient.post(this.apiUrl, {stockCode}).do(
-      response => {
-      },
-      error => console.log(error),
+      response => this.toastService.showToast('Stock added.'),
+      error => this.toastService.showToast('Could not add stock.'),
       () => this.loading = false
     );
   }
@@ -42,9 +44,8 @@ export class StockService {
   deleteStock(stockCode: string): Observable<Object> {
     this.loading = true;
     return this.httpClient.delete(`${this.apiUrl}/${stockCode}`).do(
-      response => {
-      },
-      error => console.log(error),
+      response => this.toastService.showToast('Stock deleted.'),
+      error => this.toastService.showToast('Could not delete stock.'),
       () => this.loading = false
     );
   }

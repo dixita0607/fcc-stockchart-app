@@ -1,0 +1,23 @@
+.stock {
+  max-width: 100px;
+  display: flex;
+  justify-content: space-between;
+  background-color: black;
+  margin: 2px;
+  padding: 2px 8px;
+  color: white;
+  .button {
+    display: flex;
+    align-items: center;
+    button {
+      background-color: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      cursor: pointer;
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+}

@@ -1,16 +1,20 @@
-<div *ngIf="stockService.stocks">
-  <fcc-stock-chart [stocks]="stockService.stocks"></fcc-stock-chart>
-  <div *ngFor="let stock of stockService.stocks">
-    <fcc-stock [stock]="stock"></fcc-stock>
+<div *ngIf="stockService.stocks" class="home">
+  <div class="chart-container">
+    <fcc-stock-chart [stocks]="stockService.stocks"></fcc-stock-chart>
   </div>
-  <div>
-    <form [formGroup]="form" (ngSubmit)="addNewStock()">
+  <div class="stock-detail-container">
+    <form [formGroup]="form" (ngSubmit)="addNewStock()" class="form">
       <div>
         <input #stockCode type="text" placeholder="Add stock code" formControlName="stockCode">
       </div>
       <button type="submit" [disabled]="!stockCode.value">Add</button>
     </form>
+    <div class="stocks-container">
+      <div *ngFor="let stock of stockService.stocks">
+        <fcc-stock [stock]="stock"></fcc-stock>
+      </div>
+    </div>
+    <div>
+    </div>
   </div>
 </div>
-
-<div *ngIf="stockService.loading">Loading</div>

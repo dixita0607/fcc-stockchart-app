@@ -10,6 +10,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {StockComponent} from './components/stock/stock.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {StockChartComponent} from './components/stock-chart/stock-chart.component';
+import {ToastComponent} from './components/toast/toast.component';
+import {ToastService} from "./services/toast.service";
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import {StockChartComponent} from './components/stock-chart/stock-chart.componen
     AppComponent,
     HomeComponent,
     StockComponent,
-    StockChartComponent
+    StockChartComponent,
+    ToastComponent
   ],
   imports: [
     HttpClientModule,
@@ -26,7 +29,8 @@ import {StockChartComponent} from './components/stock-chart/stock-chart.componen
     AppRoutingModule
   ],
   providers: [
-    StockService
+    StockService,
+    ToastService
   ],
   bootstrap: [AppComponent]
 })

@@ -35,6 +35,9 @@ export class StockChartComponent implements OnChanges {
       axis: {
         x: {
           tick: {
+            culling: {
+              max: 5
+            },
             format: index => x[index]
           },
           label: {
