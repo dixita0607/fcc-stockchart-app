@@ -1,4 +1,6 @@
 <div *ngIf="stock">
   <div>{{stock['Meta Data']['2. Symbol']}}</div>
-  <button type="button" (click)="deleteStock(stock['Meta Data']['2. Symbol'])">delete</button>
+  <button type="button" (click)="deleteStock(stock['Meta Data']['2. Symbol'])" [disabled]="stockService.loading">
+    delete
+  </button>
 </div>

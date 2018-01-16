@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import * as io from 'socket.io-client';
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/publish";
+import "rxjs/add/operator/do";
 
 @Injectable()
 export class StockService {
 
-  apiUrl: string = '/api/stocks';
+  private apiUrl: string = '/api/stocks';
   stocks = [];
   socket = io(window.location.host);
   loading: boolean = true;
@@ -26,9 +29,9 @@ export class StockService {
     );
   }
 
-  addStock(stockCode: string): void {
+  addStock(stockCode: string): Observable<Object> {
     this.loading = true;
-    this.httpClient.post(this.apiUrl, {stockCode}).subscribe(
+    return this.httpClient.post(this.apiUrl, {stockCode}).do(
       response => {
       },
       error => console.log(error),
@@ -36,9 +39,9 @@ export class StockService {
     );
   }
 
-  deleteStock(stockCode: string): void {
+  deleteStock(stockCode: string): Observable<Object> {
     this.loading = true;
-    this.httpClient.delete(`${this.apiUrl}/${stockCode}`).subscribe(
+    return this.httpClient.delete(`${this.apiUrl}/${stockCode}`).do(
       response => {
       },
       error => console.log(error),

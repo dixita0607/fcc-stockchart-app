@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {StockService} from "../../services/stock.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import * as io from 'socket.io-client';
 
 @Component({
   selector: 'fcc-home',
@@ -11,7 +10,6 @@ import * as io from 'socket.io-client';
 export class HomeComponent implements OnInit {
 
   form: FormGroup;
-  socket = io(window.location.host);
 
   constructor(public stockService: StockService,
               private fb: FormBuilder) {
@@ -19,7 +17,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
-    this.socket.on('added', stock => this.form.controls['stockCode'].setValue(''));
   }
 
   createForm() {
@@ -29,7 +26,9 @@ export class HomeComponent implements OnInit {
   }
 
   addNewStock() {
-    this.stockService.addStock(this.form.controls['stockCode'].value);
+    this.stockService.addStock(this.form.controls['stockCode'].value).subscribe(
+      response => this.form.controls['stockCode'].setValue('')
+    );
   }
 
 }

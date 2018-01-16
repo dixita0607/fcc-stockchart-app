@@ -11,11 +11,11 @@ export class StockComponent {
   @Input()
   stock;
 
-  constructor(private stockService: StockService) {
+  constructor(public stockService: StockService) {
   }
 
   deleteStock(stockCode) {
-    this.stockService.deleteStock(stockCode);
+    this.stockService.deleteStock(stockCode).subscribe();
   }
 
 }
